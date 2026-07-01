@@ -1,12 +1,4 @@
 """
-API Schemas
-
-Responsibility:
-Define strict Pydantic schemas for FastAPI request and response validation.
-
-Implementation added in Phase 2.
-"""
-"""
 API Schemas.
 
 Defines the public request and response contracts for the SHL
@@ -83,4 +75,3 @@ class HealthResponse(BaseModel):
         default="healthy",
         description="Application health status.",
     )
-    

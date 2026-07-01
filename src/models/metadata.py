@@ -1,12 +1,4 @@
 """
-Metadata Model
-
-Responsibility:
-Define internal filter schema for search filtering.
-
-Implementation added in Phase 2.
-"""
-"""
 Retrieval Metadata Domain Model.
 
 Represents internal metadata generated during retrieval and ranking.
@@ -32,8 +24,8 @@ class Metadata(BaseModel):
         retrieval_rank:
             Rank of the retrieved assessment after retrieval/reranking.
 
-        matched_fields:
-            Catalog fields that contributed to the match.
+        matched_catalog_fields:
+            Catalog fields that contributed to the retrieval match.
 
         matched_constraints:
             User constraints successfully matched by this assessment.
@@ -66,4 +58,3 @@ class Metadata(BaseModel):
         default_factory=list,
         description="User constraints satisfied by this assessment.",
     )
-    

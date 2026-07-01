@@ -1,12 +1,4 @@
 """
-Recommendation Model
-
-Responsibility:
-Define the internal representation of a specific recommendation.
-
-Implementation added in Phase 2.
-"""
-"""
 Recommendation Domain Model.
 
 Represents a recommendation produced by the recommendation engine.
@@ -52,5 +44,3 @@ class Recommendation(BaseModel):
         max_length=1000,
         description="Explanation for the recommendation.",
     )
-
-    

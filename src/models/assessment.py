@@ -1,12 +1,4 @@
 """
-Assessment Model
-
-Responsibility:
-Define the internal schema of a catalog assessment.
-
-Implementation added in Phase 2.
-"""
-"""
 Assessment Domain Model.
 
 Represents a normalized SHL assessment used throughout the

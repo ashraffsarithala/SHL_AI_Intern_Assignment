@@ -1,12 +1,4 @@
 """
-Conversation State Model
-
-Responsibility:
-Store structured conversation state, extracted constraints, detected intent, and conversation stage.
-
-Implementation added in Phase 2.
-"""
-"""
 Conversation State Domain Model.
 
 Represents the current reasoning state of the SHL Assessment
@@ -16,27 +8,10 @@ The ConversationState is produced by the Analyzer and consumed by the
 Decision Engine. It stores only decision-making information and does
 not duplicate conversation history or recommendation data.
 """
-from src.core.types import ConversationStage, ConversationIntent
-
-from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
-
-ConversationStage = Literal[
-    "clarification",
-    "recommendation",
-    "refinement",
-    "comparison",
-    "completed",
-]
-
-ConversationIntent = Literal[
-    "recommend",
-    "refine",
-    "compare",
-    "clarify",
-]
+from src.core.types import ConversationIntent, ConversationStage
 
 
 class ConversationState(BaseModel):

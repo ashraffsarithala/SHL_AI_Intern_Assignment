@@ -1,12 +1,4 @@
 """
-Message Model
-
-Responsibility:
-Define the internal representation of a chat message.
-
-Implementation added in Phase 2.
-"""
-"""
 Message Domain Model
 
 Defines the fundamental unit of a conversation exchanged between the user
@@ -22,6 +14,7 @@ This model is immutable and validated using Pydantic.
 from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
+
 
 
 MessageRole = Literal["user", "assistant"]
