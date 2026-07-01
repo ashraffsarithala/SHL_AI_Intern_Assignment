@@ -74,15 +74,29 @@ class ConfigurationError(ApplicationError):
 # ---------------------------------------------------------------------------
 #   Catalog subsystem
 # ---------------------------------------------------------------------------
-class CatalogError(ApplicationError):
-    """Raised when the SHL product catalog cannot be loaded, parsed, or normalised.
 
-    Typical triggers:
-    * ``data/raw/catalog.json`` is missing or contains malformed JSON.
-    * A catalog entry is missing required fields (``entity_id``, ``name``).
+class CatalogError(ApplicationError):
+    """
+    Base exception for all catalog-related failures.
     """
 
 
+class CatalogParsingError(CatalogError):
+    """
+    Raised when the raw catalog cannot be loaded or parsed.
+
+    Typical triggers:
+    - catalog.json is missing.
+    - Invalid JSON.
+    - Incorrect JSON structure.
+    """
+
+
+class CatalogNormalizationError(CatalogError):
+    """
+    Raised when raw catalog entries cannot be converted into
+    valid Assessment domain models.
+    """
 # ---------------------------------------------------------------------------
 #   Retrieval subsystem
 # ---------------------------------------------------------------------------
@@ -181,3 +195,9 @@ class EvaluationError(ApplicationError):
     * A sample conversation file cannot be parsed.
     * The agent response diverges from the expected golden output.
     """
+
+
+
+
+
+
