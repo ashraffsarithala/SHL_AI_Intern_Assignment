@@ -80,9 +80,9 @@ class CatalogLoader:
         return self._parser.parse()
 
     def _normalize(
-    self,
-    raw_entries: list[RawCatalogEntry],
-) -> list[Assessment]:
+        self,
+        raw_entries: list[RawCatalogEntry],
+    ) -> list[Assessment]:
         """
         Execute the normalization stage.
 
@@ -101,7 +101,7 @@ class CatalogLoader:
     @staticmethod
     def _create_repository(
         assessments: list[Assessment],
-) -> CatalogRepository:
+    ) -> CatalogRepository:
         """
         Build the catalog repository.
 
@@ -116,7 +116,7 @@ class CatalogLoader:
         """
 
         return CatalogRepository(assessments)
-        # ---------------------------------------------------------
+    # ---------------------------------------------------------
     # Public API
     # ---------------------------------------------------------
 

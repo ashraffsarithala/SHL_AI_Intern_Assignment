@@ -33,16 +33,18 @@ class ChatRequest(BaseModel):
 class ChatResponse(BaseModel):
     """
     Response returned by POST /chat.
+
+    Matches the SHL assignment schema exactly.
     """
 
     model_config = ConfigDict(
         extra="forbid",
     )
 
-    response: str = Field(
+    reply: str = Field(
         ...,
         min_length=1,
-        description="Assistant response.",
+        description="Assistant reply.",
     )
 
     recommendations: list[Recommendation] = Field(
@@ -50,14 +52,9 @@ class ChatResponse(BaseModel):
         description="Recommended SHL assessments.",
     )
 
-    needs_clarification: bool = Field(
-        default=False,
-        description="Whether additional user information is required.",
-    )
-
     end_of_conversation: bool = Field(
         default=False,
-        description="Whether the conversation has naturally concluded.",
+        description="Whether the task is complete.",
     )
 
 
@@ -72,6 +69,6 @@ class HealthResponse(BaseModel):
     )
 
     status: str = Field(
-        default="healthy",
-        description="Application health status.",
+        default="ok",
+        description="Application health.",
     )

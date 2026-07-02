@@ -12,6 +12,7 @@ not duplicate conversation history or recommendation data.
 from pydantic import BaseModel, ConfigDict, Field
 
 from src.core.types import ConversationIntent, ConversationStage
+from src.models.search_constraints import SearchConstraints
 
 
 class ConversationState(BaseModel):
@@ -37,9 +38,16 @@ class ConversationState(BaseModel):
         description="Current user intent.",
     )
 
-    constraints: dict[str, list[str]] = Field(
-        default_factory=dict,
-        description="Normalized user constraints extracted from conversation.",
+    constraints: SearchConstraints = Field(
+        default_factory=SearchConstraints,
+        description="Normalized search constraints extracted from the conversation.",
+    )
+
+    retrieval_limit: int = Field(
+        default=10,
+        ge=1,
+        le=10,
+        description="Maximum number of assessments to retrieve.",
     )
 
     missing_constraints: list[str] = Field(

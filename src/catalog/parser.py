@@ -117,6 +117,7 @@ class CatalogParser:
             ) from exc
 
     @staticmethod
+    
     def _validate_root(
         data: object,
     ) -> list[RawCatalogEntry]:
@@ -154,12 +155,16 @@ class CatalogParser:
             validated_entries.append(entry)
 
         return validated_entries
-        def parse(self) -> list[RawCatalogEntry]:
-        
-            self._validate_file_exists()
 
-            raw_data = self._load_json()
+    def parse(self) -> list[RawCatalogEntry]:
+        """
+        Parse the raw catalog and return validated entries.
+        """
 
-            validated_entries = self._validate_root(raw_data)
+        self._validate_file_exists()
 
-            return validated_entries
+        raw_data = self._load_json()
+
+        validated_entries = self._validate_root(raw_data)
+
+        return validated_entries

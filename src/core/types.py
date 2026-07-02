@@ -85,6 +85,16 @@ AgentAction = Literal[
     "compare",
     "refuse",
 ]
+ConversationIntent = Literal[
+    "recommend",
+    "compare",
+    "clarify",
+    "refine",
+    "refuse",
+]
+"""
+Normalized user intent extracted by the Analyzer.
+"""
 """
 High-level action label that the Decision Engine emits after evaluating the
 extracted entities.  Maps 1-to-1 onto the behavioural modes required by the
