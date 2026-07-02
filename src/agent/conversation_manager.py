@@ -111,3 +111,19 @@ class ConversationManager:
         """
 
         return len(conversation.messages) == 0
+    @staticmethod
+    def merged_user_text(
+        conversation: Conversation,
+    ) -> str:
+        """
+        Merge all user messages into one text block.
+
+        This allows the analyzer to preserve constraints across
+        multiple conversational turns.
+        """
+
+        return " ".join(
+            message.content
+            for message in conversation.messages
+            if message.role == "user"
+        )

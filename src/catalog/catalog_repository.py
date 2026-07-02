@@ -154,24 +154,28 @@ class CatalogRepository:
         name: str,
     ) -> Assessment | None:
         """
-        Retrieve an assessment by name.
+        Retrieve an assessmen   t by name.
 
-        Lookup is case-insensitive and ignores repeated whitespace.
-
-        Parameters
-        ----------
-        name:
-            Assessment name.
-
-        Returns
-        -------
-        Assessment | None
-            Matching assessment if found, otherwise None.
+        First performs an exact lookup.
+        If not found, falls back to partial matching.
         """
 
-        normalized_name = self._normalize_name(name)
+        normalized = self._normalize_name(name)
 
-        return self._by_name.get(normalized_name)
+    # Exact match
+        if normalized in self._by_name:
+            return self._by_name[normalized]
+
+    # Partial match
+        for assessment_name, assessment in self._by_name.items():
+
+            if normalized in assessment_name:
+                return assessment
+
+            if assessment_name in normalized:
+                return assessment
+
+        return None
 
     def contains(
         self,

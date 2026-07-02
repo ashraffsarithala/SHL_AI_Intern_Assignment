@@ -15,6 +15,8 @@ from src.agent.recommendation_engine import RecommendationEngine
 from src.agent.response_generator import ResponseGenerator
 from src.agent.retriever import Retriever
 from src.agent.scope_guard import ScopeGuard
+from src.agent.comparison_engine import ComparisonEngine
+
 
 from src.api.schemas import (
     ChatRequest,
@@ -45,7 +47,9 @@ retriever = Retriever(repository)
 recommendation_engine = RecommendationEngine()
 
 response_generator = ResponseGenerator()
-
+comparison_engine = ComparisonEngine(
+    repository,
+)
 # ---------------------------------------------------------
 # Health
 # ---------------------------------------------------------
@@ -97,6 +101,32 @@ async def chat(
             conversation,
         )
                 # -------------------------------------------------
+        # Comparison
+        # -------------------------------------------------
+
+        if state.intent == "compare":
+
+            if len(state.comparison_targets) != 2:
+                return ChatResponse(
+                    reply=(
+                        "Please specify exactly two SHL assessments "
+                        "to compare."
+                    ),
+                    recommendations=[],
+                    end_of_conversation=False,
+                )
+
+            reply = comparison_engine.compare(
+                state.comparison_targets[0],
+                state.comparison_targets[1],
+            )
+
+            return ChatResponse(
+                reply=reply,
+                recommendations=[],
+                end_of_conversation=True,
+            )
+        # -------------------------------------------------
         # Clarification
         # -------------------------------------------------
 

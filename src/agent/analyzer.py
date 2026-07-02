@@ -350,33 +350,58 @@ class Analyzer:
         text: str,
     ) -> list[str]:
         """
-        Extract two assessment names from a comparison request.
+        Extract two assessment names from comparison requests.
+
+        Examples
+        --------
+        Compare Python (New) and Java (New)
+        Compare OPQ with Verify Interactive
+        Difference between Java and Python
         """
 
         normalized = text.strip()
 
         lower = normalized.lower()
 
-        if " and " not in lower:
-            return []
+        separators = [
+            " and ",
+            " vs ",
+            " versus ",
+            " with ",
+        ]
 
-        parts = normalized.split(" and ")
+        for separator in separators:
 
-        if len(parts) != 2:
-            return []
+            if separator in lower:
 
-        first = (
-            parts[0]
-            .replace("Compare", "")
-            .replace("compare", "")
-            .strip()
-        )
+                index = lower.index(separator)
 
-        second = parts[1].strip()
+                left = normalized[:index]
+                right = normalized[
+                    index + len(separator):
+                ]
 
-        return [first, second]
+                prefixes = (
+                    "compare",
+                    "difference between",
+                    "compare between",
+                )
 
-    # ---------------------------------------------------------
+                for prefix in prefixes:
+
+                    if left.lower().startswith(prefix):
+
+                        left = left[
+                            len(prefix):
+                        ]
+
+                return [
+                    left.strip(),
+                    right.strip(),
+                ]
+
+        return []
+        # ---------------------------------------------------------
     # Public API
     # ---------------------------------------------------------
 
@@ -385,16 +410,13 @@ class Analyzer:
         conversation: Conversation,
     ) -> ConversationState:
         """
-        Analyze the latest user message and return
-        a structured ConversationState.
+        Analyze the conversation and produce the current ConversationState.
         """
 
-        latest_message = (
+        text = (
             self._conversation_manager
-            .latest_user_message(conversation)
+            .merged_user_text(conversation)
         )
-
-        text = latest_message.content
 
         intent = self._detect_intent(text)
 
@@ -415,8 +437,8 @@ class Analyzer:
             constraints=constraints,
             missing_constraints=missing_constraints,
             comparison_targets=self._extract_comparison_targets(
-                text
-            ), 
+                text,
+            ),
             ready_to_recommend=(
                 stage == "RETRIEVE"
             ),
